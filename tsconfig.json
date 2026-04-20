@@ -1,11 +1,29 @@
-﻿{
+{
   "compilerOptions": {
     "strict": true,
     "jsx": "react-jsx",
     "target": "ES2022",
     "module": "esnext",
     "moduleResolution": "bundler",
-    "skipLibCheck": true
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@api/*": ["src/api/*"],
+      "@auth/*": ["src/auth/*"],
+      "@config/*": ["src/config/*"],
+      "@i18n/*": ["src/i18n/*"],
+      "@modules/*": ["src/modules/*"],
+      "@notifications/*": ["src/notifications/*"],
+      "@permissions/*": ["src/permissions/*"],
+      "@scanner/*": ["src/scanner/*"],
+      "@shared/*": ["src/shared/*"],
+      "@store/*": ["src/store/*"],
+      "@theme/*": ["src/theme/*"]
+    }
   },
   "include": ["app", "src"]
 }

@@ -1,8 +1,42 @@
-﻿{
+{
   "expo": {
     "name": "Domera Mobile",
     "slug": "domera-mobile",
     "scheme": "domera",
-    "version": "1.0.0"
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.domera.mobile",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Domera uses the camera to scan QR codes on equipment, rooms, and work orders.",
+        "NSPhotoLibraryUsageDescription": "Domera uses photo access to attach evidence to work orders and inspections."
+      }
+    },
+    "android": {
+      "package": "com.domera.mobile",
+      "permissions": ["CAMERA", "VIBRATE"]
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow Domera to use the camera to scan QR codes."
+        }
+      ],
+      "expo-secure-store",
+      [
+        "expo-notifications",
+        {
+          "color": "#2563eb"
+        }
+      ]
+    ],
+    "extra": {
+      "apiBase": "http://localhost:4000",
+      "environment": "development"
+    }
   }
 }
