@@ -5,40 +5,65 @@
 // Rule: the notification payload is a ROUTING HINT, not the source of truth.
 // When the user taps a notification, we always re-fetch the underlying
 // resource from the backend before rendering.
+//
+// Expo Go runtime caveat: SDK 53+ dropped Android remote-push support from
+// the public Expo Go binary — `expo-notifications` throws on import inside
+// Expo Go on Android. We detect that environment at module load and
+// short-circuit every entry point. Real device builds (development build
+// + production EAS Build) use the full implementation unchanged.
 
 import Constants from 'expo-constants';
 import * as Device from 'expo-device';
-import * as Notifications from 'expo-notifications';
 import { Platform } from 'react-native';
 import { useEffect } from 'react';
 import { router } from 'expo-router';
 import { useAuthStore } from '../store/authStore';
 import { registerPushDevice } from './notificationsApi';
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowBanner: true,
-    shouldShowList: true,
-    shouldPlaySound: true,
-    shouldSetBadge: true,
-    shouldShowAlert: true,
-  }),
-});
+const IS_EXPO_GO = Constants.executionEnvironment === 'storeClient';
+// Android Expo Go specifically — iOS Expo Go still supports local
+// notifications fine. Web also has no Notifications API to call against.
+const PUSH_DISABLED = (IS_EXPO_GO && Platform.OS === 'android') || Platform.OS === 'web';
+
+// Lazy-load the module so importing it never runs on Expo Go Android (top
+// level `import` is what threw the original Uncaught Error). This pattern
+// also keeps Metro's static analysis happy in the disabled case.
+type NotificationsModule = typeof import('expo-notifications');
+let _notifications: NotificationsModule | null = null;
+function loadNotifications(): NotificationsModule | null {
+  if (PUSH_DISABLED) return null;
+  if (_notifications) return _notifications;
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  _notifications = require('expo-notifications') as NotificationsModule;
+  // Set foreground handler once the module is actually loaded.
+  _notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowBanner: true,
+      shouldShowList: true,
+      shouldPlaySound: true,
+      shouldSetBadge: true,
+      shouldShowAlert: true,
+    }),
+  });
+  return _notifications;
+}
 
 export async function ensurePushRegistered(): Promise<string | null> {
-  if (!Device.isDevice) return null;   // simulators can't receive real pushes
-  const perm = await Notifications.getPermissionsAsync();
+  const N = loadNotifications();
+  if (!N) return null; // Expo Go Android / web — no push to register
+  if (!Device.isDevice) return null; // simulators can't receive real pushes
+  const perm = await N.getPermissionsAsync();
   let status = perm.status;
   if (status !== 'granted') {
-    const req = await Notifications.requestPermissionsAsync();
+    const req = await N.requestPermissionsAsync();
     status = req.status;
   }
   if (status !== 'granted') return null;
 
   const projectId = Constants.expoConfig?.extra?.eas?.projectId ?? Constants.easConfig?.projectId;
   const tokenRes = projectId
-    ? await Notifications.getExpoPushTokenAsync({ projectId })
-    : await Notifications.getExpoPushTokenAsync();
+    ? await N.getExpoPushTokenAsync({ projectId })
+    : await N.getExpoPushTokenAsync();
   const token = tokenRes.data;
   try {
     await registerPushDevice({
@@ -57,9 +82,11 @@ export function useNotificationRouter() {
 
   useEffect(() => {
     if (status !== 'authenticated') return;
+    const N = loadNotifications();
+    if (!N) return; // disabled in this runtime — nothing to subscribe to
     void ensurePushRegistered();
 
-    const sub = Notifications.addNotificationResponseReceivedListener((response) => {
+    const sub = N.addNotificationResponseReceivedListener((response) => {
       const data = response.notification.request.content.data as { type?: string; taskId?: string };
       // Route based on payload TYPE. Always navigate to the server-resource
       // screen — the screen is responsible for re-fetching fresh data.

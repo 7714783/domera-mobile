@@ -26,13 +26,7 @@
           "cameraPermission": "Allow Domera to use the camera to scan QR codes."
         }
       ],
-      "expo-secure-store",
-      [
-        "expo-notifications",
-        {
-          "color": "#2563eb"
-        }
-      ]
+      "expo-secure-store"
     ],
     "extra": {
       "apiBase": "http://localhost:4000",

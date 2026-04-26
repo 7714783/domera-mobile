@@ -5,6 +5,7 @@
 //   import { apiFetch } from '../api/client';
 //
 // This module will be deleted once all imports are migrated.
+import { env } from '../config/env';
 export { apiFetch as apiGet } from '../api/client';
 export { env as _env } from '../config/env';
-export const API_BASE_URL = require('../config/env').env.apiBase;
+export const API_BASE_URL = env.apiBase;
