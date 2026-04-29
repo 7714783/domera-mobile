@@ -17,9 +17,8 @@ export function usePermissions() {
 
   const can = (cap: CapabilityKey | string): boolean => caps.has(cap);
 
-  const roleInActiveBuilding = user?.buildingRoles.find(
-    (r) => r.buildingId === scope.buildingId,
-  )?.roleKey ?? null;
+  const roleInActiveBuilding =
+    user?.buildingRoles.find((r) => r.buildingId === scope.buildingId)?.roleKey ?? null;
 
   return {
     can,

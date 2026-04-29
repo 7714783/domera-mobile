@@ -20,14 +20,14 @@ navigate to domain screen
 
 ### Recognised shapes (`src/scanner/parse.ts`)
 
-| Shape | Example | Routed to |
-|---|---|---|
-| Deep link | `domera://task/<id>` | `/(app)/tasks/[id]` |
-| Deep link | `domera://asset/<id>` | `/(app)/assets/[id]` |
-| Deep link | `domera://location/<id>` | `/(app)/locations/[id]` |
-| Web URL with cleaning QR | `https://app.domera.io/cleaning/qr/<code>` | `/(app)/cleaning/[code]` |
-| Opaque short token | `aB12_cD34` | `/v1/scanner/resolve` → typed result → navigate |
-| Anything else | `"hello world"` | unknown — UI shows "try a different QR" |
+| Shape                    | Example                                    | Routed to                                       |
+| ------------------------ | ------------------------------------------ | ----------------------------------------------- |
+| Deep link                | `domera://task/<id>`                       | `/(app)/tasks/[id]`                             |
+| Deep link                | `domera://asset/<id>`                      | `/(app)/assets/[id]`                            |
+| Deep link                | `domera://location/<id>`                   | `/(app)/locations/[id]`                         |
+| Web URL with cleaning QR | `https://app.domera.io/cleaning/qr/<code>` | `/(app)/cleaning/[code]`                        |
+| Opaque short token       | `aB12_cD34`                                | `/v1/scanner/resolve` → typed result → navigate |
+| Anything else            | `"hello world"`                            | unknown — UI shows "try a different QR"         |
 
 ## Camera
 

@@ -54,4 +54,16 @@ export const he: typeof en = {
     noAccess: 'הגישה מוגבלת',
     noAccessBody: 'אין לך הרשאה לצפות במסך זה.',
   },
+  screens: {
+    asset: 'נכס',
+    cleaningQr: 'QR ניקיון',
+    location: 'מיקום',
+    switchBuilding: 'החלף בניין',
+    quickActions: 'פעולות מהירות',
+    memberships: 'חברויות',
+    environment: 'סביבה',
+    timeline: 'ציר זמן',
+    notFound: 'המסך לא נמצא',
+    goHome: 'לעמוד הבית',
+  },
 };

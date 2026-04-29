@@ -13,7 +13,7 @@ export default function Settings() {
       <Text style={{ ...typography.heading, color: colors.text }}>{t.nav.settings}</Text>
 
       <Card>
-        <SectionHeader title="Environment" />
+        <SectionHeader title={t.screens.environment} />
         <View style={{ gap: spacing.xs, paddingTop: spacing.sm }}>
           <Row k="API base" v={env.apiBase} />
           <Row k="Environment" v={env.environment} />

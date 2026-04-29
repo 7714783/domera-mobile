@@ -15,6 +15,7 @@ pnpm --filter @domera/mobile dev               # Expo devtools, pick a simulator
 ```
 
 Expo will open the dev tools. Press:
+
 - **i** → iOS simulator (requires Xcode on macOS)
 - **a** → Android emulator
 - **w** → web (useful for quick iteration; camera/push are no-ops)
@@ -36,11 +37,11 @@ For EAS builds, use [EAS profiles](https://docs.expo.dev/build/eas-json/) to inj
 
 ## Scripts
 
-| Command | Purpose |
-|---|---|
-| `pnpm --filter @domera/mobile dev` | Expo dev server |
-| `pnpm --filter @domera/mobile typecheck` | `tsc --noEmit` |
-| `pnpm --filter @domera/mobile build` | Placeholder — production builds go through EAS Build |
+| Command                                  | Purpose                                              |
+| ---------------------------------------- | ---------------------------------------------------- |
+| `pnpm --filter @domera/mobile dev`       | Expo dev server                                      |
+| `pnpm --filter @domera/mobile typecheck` | `tsc --noEmit`                                       |
+| `pnpm --filter @domera/mobile build`     | Placeholder — production builds go through EAS Build |
 
 ## Folder tour
 

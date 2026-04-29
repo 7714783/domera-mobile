@@ -55,4 +55,16 @@ export const ru: typeof en = {
     noAccess: 'Доступ ограничен',
     noAccessBody: 'У вас нет прав на этот экран.',
   },
+  screens: {
+    asset: 'Актив',
+    cleaningQr: 'QR уборки',
+    location: 'Помещение',
+    switchBuilding: 'Сменить здание',
+    quickActions: 'Быстрые действия',
+    memberships: 'Членство',
+    environment: 'Окружение',
+    timeline: 'Таймлайн',
+    notFound: 'Экран не найден',
+    goHome: 'На главную',
+  },
 };

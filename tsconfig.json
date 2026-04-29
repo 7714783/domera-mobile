@@ -25,5 +25,6 @@
       "@theme/*": ["src/theme/*"]
     }
   },
-  "include": ["app", "src"]
+  "include": ["app", "src"],
+  "extends": "expo/tsconfig.base"
 }

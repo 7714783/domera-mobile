@@ -98,5 +98,9 @@ export async function apiFetch<T = unknown>(path: string, opts: RequestOptions =
 }
 
 function safeParse(text: string): unknown {
-  try { return JSON.parse(text); } catch { return text; }
+  try {
+    return JSON.parse(text);
+  } catch {
+    return text;
+  }
 }

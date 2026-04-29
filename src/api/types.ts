@@ -14,7 +14,13 @@ export class ApiError extends Error {
   serverMessage: string | null;
   body: unknown;
 
-  constructor(params: { status: number; message: string; body: unknown; code?: string | null; serverMessage?: string | null }) {
+  constructor(params: {
+    status: number;
+    message: string;
+    body: unknown;
+    code?: string | null;
+    serverMessage?: string | null;
+  }) {
     super(params.message);
     this.name = 'ApiError';
     this.status = params.status;

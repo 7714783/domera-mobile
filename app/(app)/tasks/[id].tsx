@@ -3,7 +3,10 @@ import { useState } from 'react';
 import { Text, View } from 'react-native';
 import { useI18n } from '../../../src/i18n';
 import {
-  useAddTaskComment, useTask, useTaskTimeline, useTaskTransition,
+  useAddTaskComment,
+  useTask,
+  useTaskTimeline,
+  useTaskTransition,
 } from '../../../src/modules/tasks/useTasks';
 import { usePermissions } from '../../../src/permissions/usePermissions';
 import { Capability } from '../../../src/permissions/capabilities';
@@ -28,7 +31,12 @@ export default function TaskDetail() {
   const comment = useAddTaskComment(id!);
   const [commentText, setCommentText] = useState('');
 
-  if (task.isLoading) return <Screen><Loader label={t.common.loading} /></Screen>;
+  if (task.isLoading)
+    return (
+      <Screen>
+        <Loader label={t.common.loading} />
+      </Screen>
+    );
   if (task.isError || !task.data) {
     return (
       <Screen>
@@ -101,7 +109,7 @@ export default function TaskDetail() {
         </Card>
       )}
 
-      <SectionHeader title="Timeline" />
+      <SectionHeader title={t.screens.timeline} />
       {timeline.isLoading ? (
         <Loader />
       ) : timeline.data && timeline.data.length > 0 ? (
@@ -110,7 +118,9 @@ export default function TaskDetail() {
             <Text style={{ ...typography.small, color: colors.textMuted }}>
               {new Date(e.createdAt).toLocaleString()} · {e.actor}
             </Text>
-            <Text style={{ ...typography.body, color: colors.text }}>{e.message ?? e.eventType}</Text>
+            <Text style={{ ...typography.body, color: colors.text }}>
+              {e.message ?? e.eventType}
+            </Text>
           </Card>
         ))
       ) : (

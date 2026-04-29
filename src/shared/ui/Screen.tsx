@@ -3,8 +3,16 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, spacing } from '../../theme/tokens';
 
 export function Screen({
-  children, scroll = true, style, padding = true,
-}: { children: React.ReactNode; scroll?: boolean; style?: StyleProp<ViewStyle>; padding?: boolean }) {
+  children,
+  scroll = true,
+  style,
+  padding = true,
+}: {
+  children: React.ReactNode;
+  scroll?: boolean;
+  style?: StyleProp<ViewStyle>;
+  padding?: boolean;
+}) {
   const Body = scroll ? ScrollView : View;
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.bg }} edges={['top', 'left', 'right']}>
@@ -21,7 +29,9 @@ export function Screen({
         }
       >
         {!scroll ? (
-          <View style={[{ flex: 1, padding: padding ? spacing.lg : 0, gap: spacing.md }, style]}>{children}</View>
+          <View style={[{ flex: 1, padding: padding ? spacing.lg : 0, gap: spacing.md }, style]}>
+            {children}
+          </View>
         ) : (
           children
         )}

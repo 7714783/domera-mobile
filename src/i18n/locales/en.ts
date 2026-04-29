@@ -52,4 +52,16 @@ export const en = {
     noAccess: 'Access restricted',
     noAccessBody: "You don't have permission to view this screen.",
   },
+  screens: {
+    asset: 'Asset',
+    cleaningQr: 'Cleaning QR',
+    location: 'Location',
+    switchBuilding: 'Switch building',
+    quickActions: 'Quick actions',
+    memberships: 'Memberships',
+    environment: 'Environment',
+    timeline: 'Timeline',
+    notFound: 'Screen not found',
+    goHome: 'Go home',
+  },
 };

@@ -35,6 +35,8 @@ export function useSessionBootstrap() {
         if (!cancelled) await useAuthStore.getState().clearSession();
       }
     })();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [token, status]);
 }

@@ -2,7 +2,10 @@ import { useQuery } from '@tanstack/react-query';
 import { FlatList, Text, View } from 'react-native';
 import { queryKeys } from '../../src/api/queryKeys';
 import { useI18n } from '../../src/i18n';
-import { listNotifications, type MobileNotificationItem } from '../../src/notifications/notificationsApi';
+import {
+  listNotifications,
+  type MobileNotificationItem,
+} from '../../src/notifications/notificationsApi';
 import { Card } from '../../src/shared/ui/Card';
 import { EmptyState } from '../../src/shared/ui/EmptyState';
 import { ErrorBlock } from '../../src/shared/ui/ErrorBlock';
@@ -18,7 +21,12 @@ export default function Notifications() {
     staleTime: 15_000,
   });
 
-  if (isLoading) return <Screen><Loader label={t.common.loading} /></Screen>;
+  if (isLoading)
+    return (
+      <Screen>
+        <Loader label={t.common.loading} />
+      </Screen>
+    );
   if (isError) {
     return (
       <Screen>
@@ -32,7 +40,12 @@ export default function Notifications() {
   }
 
   const items = data?.items ?? [];
-  if (items.length === 0) return <Screen><EmptyState title={t.notifications.empty} /></Screen>;
+  if (items.length === 0)
+    return (
+      <Screen>
+        <EmptyState title={t.notifications.empty} />
+      </Screen>
+    );
 
   return (
     <Screen scroll={false}>

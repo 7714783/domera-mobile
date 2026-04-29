@@ -11,10 +11,16 @@ export default function Buildings() {
   const { t } = useI18n();
   const user = useAuthStore((s: { user: any }) => s.user);
   const scope = useAuthStore((s: { scope: { buildingId: string | null } }) => s.scope);
-  const setActiveBuilding = useAuthStore((s: { setActiveBuilding: (id: string) => void }) => s.setActiveBuilding);
+  const setActiveBuilding = useAuthStore(
+    (s: { setActiveBuilding: (id: string) => void }) => s.setActiveBuilding,
+  );
 
   const list = (user?.buildingRoles ?? []) as Array<{
-    buildingId: string; buildingName: string; buildingSlug: string; roleName?: string; roleKey: string;
+    buildingId: string;
+    buildingName: string;
+    buildingSlug: string;
+    roleName?: string;
+    roleKey: string;
   }>;
 
   if (list.length === 0) {
@@ -47,7 +53,9 @@ export default function Buildings() {
               }}
             >
               <Text style={{ ...typography.subheading, color: colors.text }}>{r.buildingName}</Text>
-              <Text style={{ ...typography.small, color: colors.textMuted }}>{r.roleName ?? r.roleKey}</Text>
+              <Text style={{ ...typography.small, color: colors.textMuted }}>
+                {r.roleName ?? r.roleKey}
+              </Text>
             </Pressable>
           );
         })}

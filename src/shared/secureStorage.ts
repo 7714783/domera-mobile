@@ -8,7 +8,11 @@ import { Platform } from 'react-native';
 
 export async function secureSet(key: string, value: string): Promise<void> {
   if (Platform.OS === 'web') {
-    try { window.localStorage.setItem(key, value); } catch { /* noop */ }
+    try {
+      window.localStorage.setItem(key, value);
+    } catch {
+      /* noop */
+    }
     return;
   }
   await SecureStore.setItemAsync(key, value);
@@ -16,14 +20,22 @@ export async function secureSet(key: string, value: string): Promise<void> {
 
 export async function secureGet(key: string): Promise<string | null> {
   if (Platform.OS === 'web') {
-    try { return window.localStorage.getItem(key); } catch { return null; }
+    try {
+      return window.localStorage.getItem(key);
+    } catch {
+      return null;
+    }
   }
   return SecureStore.getItemAsync(key);
 }
 
 export async function secureDelete(key: string): Promise<void> {
   if (Platform.OS === 'web') {
-    try { window.localStorage.removeItem(key); } catch { /* noop */ }
+    try {
+      window.localStorage.removeItem(key);
+    } catch {
+      /* noop */
+    }
     return;
   }
   await SecureStore.deleteItemAsync(key);

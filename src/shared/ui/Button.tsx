@@ -4,7 +4,13 @@ import { colors, MIN_TAP, radius, spacing, typography } from '../../theme/tokens
 type Variant = 'primary' | 'secondary' | 'danger' | 'ghost';
 
 export function Button({
-  title, onPress, loading, disabled, variant = 'primary', style, accessibilityLabel,
+  title,
+  onPress,
+  loading,
+  disabled,
+  variant = 'primary',
+  style,
+  accessibilityLabel,
 }: {
   title: string;
   onPress: () => void;
@@ -49,8 +55,8 @@ export function Button({
 }
 
 const PALETTE: Record<Variant, { bg: string; fg: string; border: string; borderWidth: number }> = {
-  primary:   { bg: colors.primary,   fg: colors.primaryText, border: colors.primary, borderWidth: 0 },
-  secondary: { bg: colors.surface,   fg: colors.text,        border: colors.border,  borderWidth: 1 },
-  danger:    { bg: colors.danger,    fg: colors.primaryText, border: colors.danger,  borderWidth: 0 },
-  ghost:     { bg: 'transparent',    fg: colors.primary,     border: 'transparent',  borderWidth: 0 },
+  primary: { bg: colors.primary, fg: colors.primaryText, border: colors.primary, borderWidth: 0 },
+  secondary: { bg: colors.surface, fg: colors.text, border: colors.border, borderWidth: 1 },
+  danger: { bg: colors.danger, fg: colors.primaryText, border: colors.danger, borderWidth: 0 },
+  ghost: { bg: 'transparent', fg: colors.primary, border: 'transparent', borderWidth: 0 },
 };

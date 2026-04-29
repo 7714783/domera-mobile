@@ -12,18 +12,18 @@ Everything the user sees comes from `/v1/*` endpoints. Anything stored locally i
 
 ## Stack
 
-| Concern | Choice | Why |
-|---|---|---|
-| Framework | **Expo (SDK 53) + React Native** | Managed workflow, EAS Build for CI, no manual native tool-chain for most devs. |
-| Router | **expo-router** | File-based routing matches the rest of the monorepo's mental model. |
-| Language | **TypeScript strict** | Same as web. |
-| Server state | **TanStack Query v5** | De-dup, background refresh, cache invalidation that actually works. |
-| Client UI state | **Zustand v5** | Small, no boilerplate, easy to read in middleware (api client, push router). |
-| Forms | **react-hook-form + zod** | Standard RHF, zod for contract-level validation. |
-| Camera / QR | **expo-camera** (`CameraView`) | Actively maintained successor to `BarCodeScanner`. |
-| Secure storage | **expo-secure-store** | Keychain/Keystore; web falls back to localStorage for dev. |
-| Notifications | **expo-notifications** | Expo push tokens, single registration path. |
-| Localization | **expo-localization** + our own provider | Dictionary stays small; swap for formatjs when we need plurals/interpolation. |
+| Concern         | Choice                                   | Why                                                                            |
+| --------------- | ---------------------------------------- | ------------------------------------------------------------------------------ |
+| Framework       | **Expo (SDK 53) + React Native**         | Managed workflow, EAS Build for CI, no manual native tool-chain for most devs. |
+| Router          | **expo-router**                          | File-based routing matches the rest of the monorepo's mental model.            |
+| Language        | **TypeScript strict**                    | Same as web.                                                                   |
+| Server state    | **TanStack Query v5**                    | De-dup, background refresh, cache invalidation that actually works.            |
+| Client UI state | **Zustand v5**                           | Small, no boilerplate, easy to read in middleware (api client, push router).   |
+| Forms           | **react-hook-form + zod**                | Standard RHF, zod for contract-level validation.                               |
+| Camera / QR     | **expo-camera** (`CameraView`)           | Actively maintained successor to `BarCodeScanner`.                             |
+| Secure storage  | **expo-secure-store**                    | Keychain/Keystore; web falls back to localStorage for dev.                     |
+| Notifications   | **expo-notifications**                   | Expo push tokens, single registration path.                                    |
+| Localization    | **expo-localization** + our own provider | Dictionary stays small; swap for formatjs when we need plurals/interpolation.  |
 
 ## Layer map
 
@@ -60,6 +60,7 @@ Three kinds of state, three stores:
 3. **Form state** → react-hook-form, local to each screen. Not shared.
 
 Rules:
+
 - Server state is **never** mirrored into Zustand (no double source).
 - Optimistic updates only on mutations where compensation is safe (comment add, status toggle). Everywhere else we wait for server truth.
 - Cache TTL (`staleTime: 30s`) keeps screens snappy without going stale longer than a minute of field work.

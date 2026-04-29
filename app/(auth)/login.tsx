@@ -13,7 +13,9 @@ import { colors, spacing, typography } from '../../src/theme/tokens';
 
 export default function LoginScreen() {
   const { t } = useI18n();
-  const setSession = useAuthStore((s: { setSession: (token: string, user: any) => Promise<void> }) => s.setSession);
+  const setSession = useAuthStore(
+    (s: { setSession: (token: string, user: any) => Promise<void> }) => s.setSession,
+  );
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -42,7 +44,9 @@ export default function LoginScreen() {
         <Text style={{ ...typography.heading, color: colors.text }}>{t.auth.loginTitle}</Text>
 
         <View style={{ gap: spacing.sm }}>
-          <Text style={{ ...typography.label, color: colors.textMuted }}>{t.auth.email.toUpperCase()}</Text>
+          <Text style={{ ...typography.label, color: colors.textMuted }}>
+            {t.auth.email.toUpperCase()}
+          </Text>
           <Input
             value={email}
             onChangeText={setEmail}
@@ -55,7 +59,9 @@ export default function LoginScreen() {
         </View>
 
         <View style={{ gap: spacing.sm }}>
-          <Text style={{ ...typography.label, color: colors.textMuted }}>{t.auth.password.toUpperCase()}</Text>
+          <Text style={{ ...typography.label, color: colors.textMuted }}>
+            {t.auth.password.toUpperCase()}
+          </Text>
           <Input
             value={password}
             onChangeText={setPassword}

@@ -3,7 +3,7 @@
 // transitions. When new statuses or transitions land server-side, this file
 // gets additive updates.
 
-export type TaskStatus = string;      // e.g. 'scheduled' | 'in_progress' | 'completed' …
+export type TaskStatus = string; // e.g. 'scheduled' | 'in_progress' | 'completed' …
 
 export type TaskSummary = {
   id: string;

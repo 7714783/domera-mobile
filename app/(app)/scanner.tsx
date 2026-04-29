@@ -24,11 +24,18 @@ export default function Scanner() {
     } finally {
       // Allow next scan after a short pause so the user isn't bombarded by
       // repeated navigations.
-      setTimeout(() => { handlingRef.current = false; }, 1200);
+      setTimeout(() => {
+        handlingRef.current = false;
+      }, 1200);
     }
   }, []);
 
-  if (!permission) return <Screen><Text>{t.common.loading}</Text></Screen>;
+  if (!permission)
+    return (
+      <Screen>
+        <Text>{t.common.loading}</Text>
+      </Screen>
+    );
 
   if (!permission.granted) {
     return (
@@ -36,7 +43,11 @@ export default function Scanner() {
         <EmptyState
           title={t.scanner.title}
           body={permission.canAskAgain ? t.scanner.instruction : t.scanner.permissionDenied}
-          cta={permission.canAskAgain ? <Button title={t.scanner.permissionRequest} onPress={requestPermission} /> : null}
+          cta={
+            permission.canAskAgain ? (
+              <Button title={t.scanner.permissionRequest} onPress={requestPermission} />
+            ) : null
+          }
         />
       </Screen>
     );
@@ -57,8 +68,14 @@ export default function Scanner() {
       {lastUnknown && (
         <View style={styles.unknown}>
           <Text style={{ ...typography.body, color: colors.text }}>{t.scanner.unknownCode}</Text>
-          <Text style={{ ...typography.small, color: colors.textMuted }} numberOfLines={1}>{lastUnknown}</Text>
-          <Button title={t.scanner.rescan} variant="secondary" onPress={() => setLastUnknown(null)} />
+          <Text style={{ ...typography.small, color: colors.textMuted }} numberOfLines={1}>
+            {lastUnknown}
+          </Text>
+          <Button
+            title={t.scanner.rescan}
+            variant="secondary"
+            onPress={() => setLastUnknown(null)}
+          />
         </View>
       )}
     </View>
@@ -67,14 +84,20 @@ export default function Scanner() {
 
 const styles = StyleSheet.create({
   overlay: {
-    position: 'absolute', top: 0, left: 0, right: 0,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
     padding: spacing.lg,
     backgroundColor: 'rgba(0,0,0,0.45)',
     gap: spacing.xs,
     paddingTop: spacing.xxl,
   },
   unknown: {
-    position: 'absolute', bottom: spacing.xxl, left: spacing.lg, right: spacing.lg,
+    position: 'absolute',
+    bottom: spacing.xxl,
+    left: spacing.lg,
+    right: spacing.lg,
     backgroundColor: colors.surface,
     borderColor: colors.border,
     borderWidth: 1,

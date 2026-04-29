@@ -22,22 +22,30 @@ export default function Profile() {
 
   return (
     <Screen>
-      <Text style={{ ...typography.heading, color: colors.text }}>{user?.displayName ?? user?.email}</Text>
+      <Text style={{ ...typography.heading, color: colors.text }}>
+        {user?.displayName ?? user?.email}
+      </Text>
       <Text style={{ ...typography.body, color: colors.textMuted }}>{user?.email}</Text>
 
       <Card>
-        <SectionHeader title="Memberships" />
+        <SectionHeader title={t.screens.memberships} />
         <View style={{ gap: spacing.sm, paddingTop: spacing.sm }}>
           {(user?.buildingRoles ?? []).map((r: any) => (
             <View key={r.buildingId}>
               <Text style={{ ...typography.body, color: colors.text }}>{r.buildingName}</Text>
-              <Text style={{ ...typography.small, color: colors.textMuted }}>{r.roleName ?? r.roleKey}</Text>
+              <Text style={{ ...typography.small, color: colors.textMuted }}>
+                {r.roleName ?? r.roleKey}
+              </Text>
             </View>
           ))}
         </View>
       </Card>
 
-      <Button title={t.nav.settings} variant="secondary" onPress={() => router.push('/(app)/settings')} />
+      <Button
+        title={t.nav.settings}
+        variant="secondary"
+        onPress={() => router.push('/(app)/settings')}
+      />
       <Button title={t.auth.logout} variant="danger" onPress={signOut} />
     </Screen>
   );

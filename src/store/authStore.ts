@@ -63,15 +63,19 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   setUser: (user) => {
     const current = get();
     // Preserve active building choice if user still has access to it.
-    const stillHasBuilding = current.scope.buildingId && user.buildingRoles.some((r) => r.buildingId === current.scope.buildingId);
+    const stillHasBuilding =
+      current.scope.buildingId &&
+      user.buildingRoles.some((r) => r.buildingId === current.scope.buildingId);
     const primary = user.buildingRoles[0];
     set({
       status: 'authenticated',
       user,
       scope: {
         tenantId: user.tenantId ?? primary?.tenantId ?? null,
-        buildingId: stillHasBuilding ? current.scope.buildingId : primary?.buildingId ?? null,
-        buildingSlug: stillHasBuilding ? current.scope.buildingSlug : primary?.buildingSlug ?? null,
+        buildingId: stillHasBuilding ? current.scope.buildingId : (primary?.buildingId ?? null),
+        buildingSlug: stillHasBuilding
+          ? current.scope.buildingSlug
+          : (primary?.buildingSlug ?? null),
       },
     });
   },

@@ -28,7 +28,7 @@ export default function Home() {
           </Text>
           {(user?.buildingRoles ?? []).length > 1 && (
             <Button
-              title="Switch building"
+              title={t.screens.switchBuilding}
               variant="secondary"
               onPress={() => router.push('/(app)/buildings')}
             />
@@ -37,10 +37,14 @@ export default function Home() {
       </Card>
 
       <Card>
-        <SectionHeader title="Quick actions" />
+        <SectionHeader title={t.screens.quickActions} />
         <View style={{ gap: spacing.sm, paddingTop: spacing.sm }}>
           <Button title={t.nav.tasks} onPress={() => router.push('/(app)/tasks')} />
-          <Button title={t.nav.scanner} variant="secondary" onPress={() => router.push('/(app)/scanner')} />
+          <Button
+            title={t.nav.scanner}
+            variant="secondary"
+            onPress={() => router.push('/(app)/scanner')}
+          />
         </View>
       </Card>
 

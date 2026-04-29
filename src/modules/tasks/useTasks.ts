@@ -1,9 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { queryKeys } from '../../api/queryKeys';
 import { useAuthStore } from '../../store/authStore';
-import {
-  addTaskComment, getTask, listMyTasks, listTaskTimeline, transitionTask,
-} from './tasksApi';
+import { addTaskComment, getTask, listMyTasks, listTaskTimeline, transitionTask } from './tasksApi';
 
 export function useMyTasks() {
   const scope = useAuthStore((s) => s.scope);

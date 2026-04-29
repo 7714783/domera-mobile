@@ -14,7 +14,12 @@ export default function TasksList() {
   const { t } = useI18n();
   const { data, isLoading, isError, refetch, error } = useMyTasks();
 
-  if (isLoading) return <Screen><Loader label={t.common.loading} /></Screen>;
+  if (isLoading)
+    return (
+      <Screen>
+        <Loader label={t.common.loading} />
+      </Screen>
+    );
   if (isError) {
     return (
       <Screen>
@@ -92,5 +97,9 @@ function priorityTone(p: string): 'neutral' | 'primary' | 'success' | 'warning' 
 }
 
 function fmt(iso: string): string {
-  try { return new Date(iso).toLocaleDateString(); } catch { return iso; }
+  try {
+    return new Date(iso).toLocaleDateString();
+  } catch {
+    return iso;
+  }
 }

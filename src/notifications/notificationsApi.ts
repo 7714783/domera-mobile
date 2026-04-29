@@ -9,7 +9,7 @@ export type RegisterDeviceInput = {
 
 export type MobileNotificationItem = {
   id: string;
-  type: string;          // new_task_assigned | task_status_changed | equipment_alert | …
+  type: string; // new_task_assigned | task_status_changed | equipment_alert | …
   title: string;
   body: string;
   data: Record<string, unknown>;

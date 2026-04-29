@@ -11,9 +11,9 @@ Every non-2xx response should return a JSON body the client can render:
 ```json
 {
   "message": "human readable message",
-  "error":   "Unauthorized",
+  "error": "Unauthorized",
   "statusCode": 401,
-  "code":  "optional_machine_code"
+  "code": "optional_machine_code"
 }
 ```
 
@@ -31,11 +31,11 @@ Query params the client sends: `take`, `skip`, plus domain-specific filters.
 
 ## Auth
 
-| Method | Path | Purpose |
-|---|---|---|
-| `POST` | `/v1/auth/login` | `{ email, password }` → `{ token, user? }` |
-| `GET`  | `/v1/auth/me` | `CurrentUser` (includes `buildingRoles[]` and **`capabilities[]`**) |
-| `POST` | `/v1/auth/logout` | Optional — client clears locally regardless |
+| Method | Path              | Purpose                                                             |
+| ------ | ----------------- | ------------------------------------------------------------------- |
+| `POST` | `/v1/auth/login`  | `{ email, password }` → `{ token, user? }`                          |
+| `GET`  | `/v1/auth/me`     | `CurrentUser` (includes `buildingRoles[]` and **`capabilities[]`**) |
+| `POST` | `/v1/auth/logout` | Optional — client clears locally regardless                         |
 
 `CurrentUser` shape (`src/auth/types.ts`):
 
@@ -63,33 +63,33 @@ Backend already has most of this. **[needs backend]** is the `capabilities[]` pr
 
 Mobile treats the web-side "plan item executions" as tasks. The contract below is what mobile reads — the backend may already expose some of it under different paths; the mapping layer lives in `src/modules/tasks/tasksApi.ts`.
 
-| Method | Path | Purpose |
-|---|---|---|
+| Method | Path                             | Purpose                                                               |
+| ------ | -------------------------------- | --------------------------------------------------------------------- |
 | `GET`  | `/v1/tasks?mine=1&buildingId=<>` | `Paginated<TaskSummary>` **[needs backend — unified tasks endpoint]** |
-| `GET`  | `/v1/tasks/:id` | `TaskDetail` including `allowedTransitions[]` |
-| `GET`  | `/v1/tasks/:id/timeline` | `TaskTimelineEntry[]` |
-| `POST` | `/v1/tasks/:id/transition` | `{ toStatus, comment? }` |
-| `POST` | `/v1/tasks/:id/comments` | `{ message }` |
+| `GET`  | `/v1/tasks/:id`                  | `TaskDetail` including `allowedTransitions[]`                         |
+| `GET`  | `/v1/tasks/:id/timeline`         | `TaskTimelineEntry[]`                                                 |
+| `POST` | `/v1/tasks/:id/transition`       | `{ toStatus, comment? }`                                              |
+| `POST` | `/v1/tasks/:id/comments`         | `{ message }`                                                         |
 
 Key rule: the backend drives **allowed transitions** per user. The mobile UI only renders transitions that come back in `allowedTransitions[]`. No hardcoded status machine in the client.
 
 ## Scanner
 
-| Method | Path | Purpose |
-|---|---|---|
-| `POST` | `/v1/scanner/resolve` | `{ token }` → `{ kind: 'task' \| 'asset' \| 'location' \| 'cleaning_request_form', ... }` **[needs backend]** |
-| `GET`  | `/v1/public/cleaning/qr/:code` | existing — reused for cleaning QRs |
+| Method | Path                           | Purpose                                                                                                       |
+| ------ | ------------------------------ | ------------------------------------------------------------------------------------------------------------- |
+| `POST` | `/v1/scanner/resolve`          | `{ token }` → `{ kind: 'task' \| 'asset' \| 'location' \| 'cleaning_request_form', ... }` **[needs backend]** |
+| `GET`  | `/v1/public/cleaning/qr/:code` | existing — reused for cleaning QRs                                                                            |
 
 The resolver is the **single point** where a short opaque token gets turned into a domain intent. Adding new scan targets = extending this endpoint, no client change required beyond an extra `kind`.
 
 ## Notifications
 
-| Method | Path | Purpose |
-|---|---|---|
-| `POST`   | `/v1/notifications/devices` | Register Expo push token **[needs backend]** |
-| `DELETE` | `/v1/notifications/devices` | Unregister (on logout) **[needs backend]** |
-| `GET`    | `/v1/notifications?take=50` | Inbox |
-| `POST`   | `/v1/notifications/:id/read` | Mark read |
+| Method   | Path                         | Purpose                                      |
+| -------- | ---------------------------- | -------------------------------------------- |
+| `POST`   | `/v1/notifications/devices`  | Register Expo push token **[needs backend]** |
+| `DELETE` | `/v1/notifications/devices`  | Unregister (on logout) **[needs backend]**   |
+| `GET`    | `/v1/notifications?take=50`  | Inbox                                        |
+| `POST`   | `/v1/notifications/:id/read` | Mark read                                    |
 
 Registration body: `{ expoPushToken, platform, deviceId?, appVersion? }`. Backend should upsert by `(userId, expoPushToken)`.
 
@@ -97,19 +97,19 @@ Registration body: `{ expoPushToken, platform, deviceId?, appVersion? }`. Backen
 
 Mobile already has everything it needs from existing web endpoints:
 
-| Method | Path |
-|---|---|
-| `GET` | `/v1/buildings` |
-| `GET` | `/v1/buildings/:slug/locations` |
+| Method | Path                            |
+| ------ | ------------------------------- |
+| `GET`  | `/v1/buildings`                 |
+| `GET`  | `/v1/buildings/:slug/locations` |
 
 Active building is driven by the client's `authStore.scope`. Mobile does not filter locations globally — it relies on the backend to respect `X-Tenant-Id`.
 
 ## Attachments / photos (foundation, not wired)
 
-| Method | Path | Purpose |
-|---|---|---|
-| `POST` | `/v1/documents/upload` | Existing — raw-body upload. Mobile will need a multipart/signed-URL alternative for large files. **[needs backend]** presigned URL endpoint. |
-| `POST` | `/v1/tasks/:id/attachments` | Attach existing doc to a task. **[needs backend]** |
+| Method | Path                        | Purpose                                                                                                                                      |
+| ------ | --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| `POST` | `/v1/documents/upload`      | Existing — raw-body upload. Mobile will need a multipart/signed-URL alternative for large files. **[needs backend]** presigned URL endpoint. |
+| `POST` | `/v1/tasks/:id/attachments` | Attach existing doc to a task. **[needs backend]**                                                                                           |
 
 Planned shape: `POST /v1/documents/presigned-upload → { uploadUrl, documentId }`. Client PUTs file directly to the URL, then calls `/tasks/:id/attachments { documentId }`.
 

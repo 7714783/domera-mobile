@@ -2,8 +2,14 @@ import { Text, View } from 'react-native';
 import { colors, radius, spacing, typography } from '../../theme/tokens';
 import { Button } from './Button';
 
-export function ErrorBlock({ message, onRetry, retryLabel = 'Retry' }: {
-  message: string; onRetry?: () => void; retryLabel?: string;
+export function ErrorBlock({
+  message,
+  onRetry,
+  retryLabel = 'Retry',
+}: {
+  message: string;
+  onRetry?: () => void;
+  retryLabel?: string;
 }) {
   return (
     <View

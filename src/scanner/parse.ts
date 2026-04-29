@@ -13,7 +13,7 @@ export type ScanResult =
   | { kind: 'asset'; assetId: string }
   | { kind: 'location'; locationId: string }
   | { kind: 'cleaning_qr'; code: string }
-  | { kind: 'opaque_token'; token: string; url: string }   // resolve via backend
+  | { kind: 'opaque_token'; token: string; url: string } // resolve via backend
   | { kind: 'unknown'; raw: string };
 
 const DOMERA_SCHEME = 'domera://';

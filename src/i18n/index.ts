@@ -14,8 +14,14 @@
 
 import * as Localization from 'expo-localization';
 import {
-  createContext, createElement, useCallback, useContext, useEffect,
-  useMemo, useState, type ReactNode,
+  createContext,
+  createElement,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
 } from 'react';
 import { I18nManager } from 'react-native';
 import { secureGet, secureSet } from '../shared/secureStorage';
@@ -58,8 +64,11 @@ export function I18nProvider({ children }: { children: ReactNode }) {
       try {
         const stored = await secureGet(STORAGE_KEY);
         if (stored === 'en' || stored === 'ru' || stored === 'he') setLocaleState(stored);
-      } catch { /* noop — fall back to device detection */ }
-      finally { setReady(true); }
+      } catch {
+        /* noop — fall back to device detection */
+      } finally {
+        setReady(true);
+      }
     })();
   }, []);
 
